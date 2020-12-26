@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef} from "react";
+import React, {useState, useEffect, useRef, useMemo} from "react";
 import {getCharacters, getListCharacters} from "../../redux/charactersReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {getCharactersCount, getCharactersList, getIsFetching} from "../../redux/selectors/charactersSelectors";
@@ -19,7 +19,8 @@ const CharacterListComponent = () => {
     const history = useHistory();
 
     let InputRef = useRef(null);
-
+    let clearFilterRef = useRef(null);
+    const page = new URLSearchParams(location.search).get("page") || 1;
     const [searchText, setSearchText] = useState(new URLSearchParams(location.search).get('search') || '');
     const [listType, setListType] = useState('allCharacters');
 
@@ -30,23 +31,26 @@ const CharacterListComponent = () => {
     const [likedCharacters, setLikedCharacters] = useState(localStorage.getItem('likedCharacters') === null ? [] : JSON.parse(localStorage.getItem('likedCharacters')));
     const [dislikedCharacters, setDislikedCharacters] = useState(localStorage.getItem('dislikedCharacters') === null ? [] : JSON.parse(localStorage.getItem('dislikedCharacters')));
 
-    let page = new URLSearchParams(location.search).get("page") || 1;
-
     const getColumnSearchProps = (dataIndex) => ({
-        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
-            <div style={{padding: 8}}>
+        filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => {
+            clearFilterRef.current = clearFilters;
+            return <div style={{padding: 8}}>
                 <Input
                     ref={InputRef}
                     placeholder={`Search ${dataIndex}`}
                     value={selectedKeys[0]}
                     onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
-                    onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                    onPressEnter={() => {
+                        listType === 'allCharacters' ? handleSearch(selectedKeys, confirm, dataIndex) : confirm()
+                    }}
                     style={{width: 188, marginBottom: 8, display: 'block'}}
                 />
                 <Space>
                     <Button
                         type="primary"
-                        onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        onClick={() => {
+                            listType === 'allCharacters' ? handleSearch(selectedKeys, confirm, dataIndex) : confirm()
+                        }}
                         icon={<SearchOutlined/>}
                         size="small"
                         style={{width: 90}}
@@ -58,7 +62,7 @@ const CharacterListComponent = () => {
                     </Button>
                 </Space>
             </div>
-        ),
+        },
         filterIcon: (filtered) => <SearchOutlined style={{ color: filtered || searchText !== '' ? '#1890ff' : undefined }}/>,
         onFilter: (value, record) =>
             record[dataIndex]
@@ -199,6 +203,7 @@ const CharacterListComponent = () => {
                 } else {
                     history.push('/peoples')
                 }
+                clearFilterRef.current();
                 setListType('allCharacters');
                 break;
             case 'likedCharacters':
