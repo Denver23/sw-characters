@@ -41,7 +41,7 @@ const CharactersAutocompleteComponent = () => {
 
     const onSelect = (data) => {
         const character = searchData.find(item => item.name === data);
-        history.push(`/peoples/${getSWAPIId(character.url)}`)
+        history.push(`/characters/${getSWAPIId(character.url)}`)
     };
 
     return <div className={s.wrapper}>

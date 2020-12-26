@@ -53,7 +53,7 @@ const App = () => {
                 <Row className={'header-row'}>
                     <Col span={12}>
                         <Menu theme="dark" mode="horizontal" selectedKeys={selectedItems}>
-                            <Menu.Item key="Peoples"><Link to={'/peoples'}>Peoples</Link></Menu.Item>
+                            <Menu.Item key="Characters"><Link to={'/characters'}>Characters</Link></Menu.Item>
                             <Menu.Item key="Planets"><Link to={'/planets'}>Planets</Link></Menu.Item>
                             <Menu.Item key="Starships"><Link to={'/starships'}>Starships</Link></Menu.Item>
                             <Menu.Item key="Films"><Link to={'/films'}>Films</Link></Menu.Item>
@@ -70,8 +70,8 @@ const App = () => {
             <Content className={'content'}>
                 <Switch>
                     <Route exact path='/' component={CharacterListComponent}/>
-                    <Route exact path='/peoples' component={CharacterListComponent}/>
-                    <Route path='/peoples/:id' component={CharacterProfileComponent}/>
+                    <Route exact path='/characters' component={CharacterListComponent}/>
+                    <Route path='/characters/:id' component={CharacterProfileComponent}/>
                     <Route exact path='/planets' component={CharacterListComponent}/>
                     <Route exact path='/starships' component={CharacterListComponent}/>
                     <Route exact path='/films' component={CharacterListComponent}/>

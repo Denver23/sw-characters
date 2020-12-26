@@ -10,14 +10,6 @@ export const getBirthYear = (store) => {
     return store.characterProfileReducer.birth_year;
 };
 
-export const getCharacterCreated = (store) => {
-    return store.characterProfileReducer.created;
-};
-
-export const getCharacterEdited = (store) => {
-    return store.characterProfileReducer.edited;
-};
-
 export const getCharacterEyeColor = (store) => {
     return store.characterProfileReducer.eye_color;
 };

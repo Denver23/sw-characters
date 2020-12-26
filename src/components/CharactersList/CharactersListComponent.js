@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useRef, useMemo} from "react";
+import React, {useState, useEffect, useRef} from "react";
 import {getCharacters, getListCharacters} from "../../redux/charactersReducer";
 import {useDispatch, useSelector} from "react-redux";
 import {getCharactersCount, getCharactersList, getIsFetching} from "../../redux/selectors/charactersSelectors";
@@ -80,7 +80,7 @@ const CharacterListComponent = () => {
         },
         render: (text, record, index) =>
             searchText !== '' ? (
-                <Link to={`/peoples/${getSWAPIId(record.url)}`} className={s.characterLink}>
+                <Link to={`/characters/${getSWAPIId(record.url)}`} className={s.characterLink}>
                     <Highlighter
                         highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
                         searchWords={[searchText]}
@@ -89,7 +89,7 @@ const CharacterListComponent = () => {
                     />
                 </Link>
             ) : (
-                <Link to={`/peoples/${getSWAPIId(record.url)}`} className={s.characterLink}>
+                <Link to={`/characters/${getSWAPIId(record.url)}`} className={s.characterLink}>
                     {text}
                 </Link>
             ),
@@ -201,7 +201,7 @@ const CharacterListComponent = () => {
                 if(page === 1) {
                     dispatch(getCharacters(1));
                 } else {
-                    history.push('/peoples')
+                    history.push('/characters')
                 }
                 clearFilterRef.current();
                 setListType('allCharacters');

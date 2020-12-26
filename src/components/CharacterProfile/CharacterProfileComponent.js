@@ -4,8 +4,6 @@ import {characterProfileReducerActions, getCharacterProfile} from "../../redux/c
 import {useDispatch, useSelector} from "react-redux";
 import {
     getBirthYear,
-    getCharacterCreated,
-    getCharacterEdited,
     getCharacterEyeColor,
     getCharacterFilms,
     getCharacterGender,
@@ -28,8 +26,6 @@ const CharacterProfileComponent = () => {
 
     const name = useSelector(getCharacterName);
     const characterBirthYear = useSelector(getBirthYear);
-    const characterCreated = useSelector(getCharacterCreated);
-    const characterEdited = useSelector(getCharacterEdited);
     const characterEyeColor = useSelector(getCharacterEyeColor);
     const characterFilms = useSelector(getCharacterFilms);
     const characterGender = useSelector(getCharacterGender);
@@ -149,7 +145,7 @@ const CharacterProfileComponent = () => {
                 <Link to={'/'}>Home</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>
-                <Link to={'/peoples'}>Peoples</Link>
+                <Link to={'/characters'}>Characters</Link>
             </Breadcrumb.Item>
             <Breadcrumb.Item>{name}</Breadcrumb.Item>
         </Breadcrumb>
@@ -164,7 +160,7 @@ const CharacterProfileComponent = () => {
             />
             <div style={{textAlign: 'center', marginTop: '10px'}}>
                 <Button type="dashed" size={'default'} shape={'round'} onClick={() => setPhotoModal(true)}>
-                    (Change Photo)
+                    Change Photo
                 </Button>
             </div>
             <Modal title="Photo Link" visible={isPhotoModalVisible} onOk={handleChangePhotoURL} onCancel={handleCancelPhotoURL}>
@@ -176,10 +172,10 @@ const CharacterProfileComponent = () => {
         <Descriptions title="Character Info" bordered>
             <Descriptions.Item label="Name">{name}</Descriptions.Item>
             <Descriptions.Item label="Character Birth Year">{characterBirthYear}</Descriptions.Item>
-            <Descriptions.Item label="Character Created">{characterCreated}</Descriptions.Item>
-            <Descriptions.Item label="Character Edited">{characterEdited}</Descriptions.Item>
             <Descriptions.Item label="Character Eye Color">{characterEyeColor}</Descriptions.Item>
             <Descriptions.Item label="Character Mass">{characterMass} kg</Descriptions.Item>
+            <Descriptions.Item label="Character Gender">{characterGender}</Descriptions.Item>
+            <Descriptions.Item label="Character Hair Color">{characterHairColor}</Descriptions.Item>
             <Descriptions.Item label="Character Films" span={3}>
                 <ul className={s.profileList}>
                     {characterFilms.map(film => {
@@ -187,8 +183,6 @@ const CharacterProfileComponent = () => {
                     })}
                 </ul>
             </Descriptions.Item>
-            <Descriptions.Item label="Character Gender">{characterGender}</Descriptions.Item>
-            <Descriptions.Item label="Character Hair Color">{characterHairColor}</Descriptions.Item>
             <Descriptions.Item label="Character Height">{characterHeight} cm</Descriptions.Item>
             <Descriptions.Item label="Character Homeworld">
                 <Link
